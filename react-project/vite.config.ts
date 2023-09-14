@@ -9,11 +9,21 @@ export default defineConfig(({ command }) => {
   if (command === "serve") {
     return {
       plugins: [react()],
+      css: {
+        modules: {
+          localsConvention: "camelCase",
+        },
+      },
     };
   } else {
     // vite build
     return {
       plugins: [react({ jsxRuntime: "classic" })],
+      css: {
+        modules: {
+          localsConvention: "camelCase",
+        },
+      },
       build: {
         lib: {
           entry: resolve(__dirname, "lib/index.tsx"),

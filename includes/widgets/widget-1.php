@@ -58,6 +58,7 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
       [
         'type' => \Elementor\Controls_Manager::TEXT,
         'label' => esc_html__('Simple Text Field', 'textdomain'),
+        'default' => 'Hello! I was set through Elementor! :)'
       ]
     );
 
@@ -66,7 +67,7 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
       [
         'type' => \Elementor\Controls_Manager::TEXT,
         'label' => esc_html__('Root ID', 'textdomain'),
-        'default' => 'root'
+        'default' => '' // having defaults can potentially override the component by adding another component to Elementor..
       ]
     );
 
@@ -79,10 +80,10 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
   {
     // Render root element
 ?>
-
     <# view.addRenderAttribute( 'wrapper' , { id: settings.root_id } ); #>
-
       <div {{{view.getRenderAttributeString('wrapper')}}}>
+        <!-- Fallback here.. -->
+        Oops, something went wrong while loading this widget..
       </div>
 
       <script type="module">
@@ -90,8 +91,10 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
         var root = ReactDOM.createRoot(document.getElementById("{{{settings.root_id}}}"));
 
         // The settings. Only way I found to access them is through a string.
+        // !!! UNSAFE -- user input gets escaped on writing "</ script>" due to escaping php html!!!
+        // TODO: Find a safer way to do this.
         var settings = {
-          text: "{{settings.example_control}}"
+          text: "{{{settings.example_control}}}"
         }
 
         root.render(React.createElement(() => App(settings)))
@@ -111,20 +114,29 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
         'id' => $settings['root_id']
       ]
     );
+
     ?>
-      <div <?= $this->get_render_attribute_string('wrapper') ?>>
-      </div>
 
-      <script type="module">
-        import App from '<?= plugin_dir_url(dirname(dirname(__FILE__))) . 'assets/index.js' ?>';
-        var root = ReactDOM.createRoot(document.getElementById("<?= $settings['root_id'] ?>"));
+      <?php if (!$settings['root_id']) : ?>
+        <p style="color: red;">Missing Root ID.</p>
+      <?php else : ?>
+        <div <?= $this->get_render_attribute_string('wrapper') ?>>
+          <!-- Fallback here.. -->
+          Oops, something went wrong while loading this widget..
+        </div>
 
-        var settings = {
-          text: "<?= esc_html($settings['example_control']) ?>"
-        }
+        <script type="module">
+          import App from '<?= plugin_dir_url(dirname(dirname(__FILE__))) . 'assets/index.js' ?>';
+          var root = ReactDOM.createRoot(document.getElementById("<?= $settings['root_id'] ?>"));
 
-        root.render(React.createElement(() => App(settings)))
-      </script>
+          // It doesn't seem that react based applications need filtering functions..
+          var settings = {
+            text: "<?= $settings['example_control'] ?>"
+          }
+
+          root.render(React.createElement(() => App(settings)))
+        </script>
+      <?php endif; ?>
   <?php
   }
 }

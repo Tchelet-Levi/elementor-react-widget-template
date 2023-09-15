@@ -13,6 +13,6 @@ Clone the repo and install the dependencies.
 
 You can change the `react-project` folder to whatever you prefer later.
 
-## Bugs
+# TODO
 
-- For some reason, Elementor miscalculates the wrapper size sometimes in the editor. Refreshing the page sometimes fixes this.
+- Add better support for slow loading apps. Make the widget take up the space it will need through elementor maybe to avoid layout shifts?

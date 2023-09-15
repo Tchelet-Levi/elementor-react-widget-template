@@ -11,6 +11,8 @@
  * Elementor Pro tested up to: 3.15.3
  */
 
+//  ! All the names here must be unique to avoid collisions!.
+
 function elementor_react_addon()
 {
   // Load plugin files

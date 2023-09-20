@@ -2,6 +2,8 @@
 
 namespace Elementor_React_Addon;
 
+defined('ABSPATH') || exit;
+
 final class Plugin
 {
   /**

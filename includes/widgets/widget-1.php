@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || exit;
+
 class Elementor_React_Widget extends \Elementor\Widget_Base
 {
   public function get_name()

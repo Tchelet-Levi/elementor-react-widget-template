@@ -36,7 +36,8 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
 
   public function get_script_depends()
   {
-    return ['react', 'react-dom', 'widget-script-1'];
+    // Consider requiring 'wp-components' for fast component reuse if necessary
+    return ['wp-element', 'widget-script-1'];
   }
 
   public function get_style_depends()

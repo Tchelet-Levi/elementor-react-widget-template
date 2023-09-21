@@ -61,9 +61,9 @@ class TestWidget extends \Elementor\Widget_Base
     $this->add_control(
       'example_control',
       [
-        'type' => \Elementor\Controls_Manager::TEXT,
+        'type' => \Elementor\Controls_Manager::TEXTAREA,
         'label' => esc_html__('Simple Text Field', 'textdomain'),
-        'default' => 'Hello! I was set through Elementor! :)'
+        'default' => 'Hello! I was set through Elementor! :)',
       ]
     );
 

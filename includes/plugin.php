@@ -2,6 +2,8 @@
 
 namespace Elementor_React_Addon;
 
+use Elementor_React_Addon\Widgets\TestWidget;
+
 defined('ABSPATH') || exit;
 
 final class Plugin
@@ -182,7 +184,13 @@ final class Plugin
    */
   public function init()
   {
-    // Register widgets, etc..
+    // Widget scripts
+    wp_register_script('widget-script-1', ELEMENTOR_REACT_ADDON_PLUGIN_PATH_URL . 'assets/index.js');
+
+    // Styles
+    wp_register_style('widget-style-1', ELEMENTOR_REACT_ADDON_PLUGIN_PATH_URL . 'assets/style.css');
+
+    // Register widgets and controls
     add_action('elementor/widgets/register', [$this, 'register_widgets']);
   }
 
@@ -197,10 +205,7 @@ final class Plugin
    */
   public function register_widgets($widgets_manager)
   {
-    // Require widget files
-    require_once(__DIR__ . '/widgets/widget-1.php');
-
     // Register widget
-    $widgets_manager->register(new \Elementor_React_Widget());
+    $widgets_manager->register(new TestWidget());
   }
 }

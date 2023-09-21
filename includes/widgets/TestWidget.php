@@ -1,8 +1,10 @@
 <?php
 
+namespace Elementor_React_Addon\Widgets;
+
 defined('ABSPATH') || exit;
 
-class Elementor_React_Widget extends \Elementor\Widget_Base
+class TestWidget extends \Elementor\Widget_Base
 {
   public function get_name()
   {
@@ -90,7 +92,7 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
       </div>
 
       <script type="module">
-        import App from '<?= plugin_dir_url(dirname(dirname(__FILE__))) . 'assets/index.js' ?>';
+        import App from '<?= ELEMENTOR_REACT_ADDON_PLUGIN_PATH_URL . 'assets/index.js' ?>';
         var root = ReactDOM.createRoot(document.getElementById("{{{settings.root_id}}}"));
 
         // The settings. Only way I found to access them is through a string.
@@ -129,7 +131,7 @@ class Elementor_React_Widget extends \Elementor\Widget_Base
         </div>
 
         <script type="module">
-          import App from '<?= plugin_dir_url(dirname(dirname(__FILE__))) . 'assets/index.js' ?>';
+          import App from '<?= ELEMENTOR_REACT_ADDON_PLUGIN_PATH_URL . 'assets/index.js' ?>';
           var root = ReactDOM.createRoot(document.getElementById("<?= $settings['root_id'] ?>"));
 
           // It doesn't seem that react based applications need filtering functions..

@@ -11,24 +11,33 @@
  * Elementor Pro tested up to: 3.15.3
  */
 
+use Elementor_React_Addon\Plugin;
+
 defined('ABSPATH') || exit;
 
-// Register our plugin
-if (!function_exists('elementor_react_addon')) {
-  function elementor_react_addon()
+// define *global* variables for plugin file and dir path for our plugin.
+// Care for naming conflicts..
+if (!defined('ELEMENTOR_REACT_ADDON_PLUGIN_FILE')) {
+  define('ELEMENTOR_REACT_ADDON_PLUGIN_FILE', __FILE__);
+}
+
+if (!defined('ELEMENTOR_REACT_ADDON_PLUGIN_PATH')) {
+  define('ELEMENTOR_REACT_ADDON_PLUGIN_PATH', plugin_dir_path(__FILE__));
+}
+
+if (!defined('ELEMENTOR_REACT_ADDON_PLUGIN_PATH_URL')) {
+  define('ELEMENTOR_REACT_ADDON_PLUGIN_PATH_URL', plugin_dir_url(__FILE__));
+}
+
+// require_once our autoload
+require_once ELEMENTOR_REACT_ADDON_PLUGIN_PATH . 'vendor/autoload.php';
+
+if (!function_exists('elementor_react_plugin')) {
+  function elementor_react_plugin()
   {
-    // Load plugin files
-    require_once(__DIR__ . '/includes/plugin.php');
-
-    // Widget scripts
-    wp_register_script('widget-script-1', plugins_url('assets/index.js', __FILE__));
-
-    // Styles
-    wp_register_style('widget-style-1', plugins_url('assets/style.css', __FILE__));
-
-    // Run the plugin
-    \Elementor_React_Addon\Plugin::instance();
+    return Plugin::instance();
   }
 }
 
-add_action('plugins_loaded', 'elementor_react_addon');
+// Run the plugin
+add_action('plugins_loaded', 'elementor_react_plugin');
